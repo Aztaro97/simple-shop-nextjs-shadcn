@@ -1,9 +1,7 @@
 import { Product } from '@/lib/types';
 
 export async function getProducts(page: number = 1, limit: number = 6) {
-  const res = await fetch('https://fakestoreapi.com/products', {
-    next: { revalidate: 3600 }
-  });
+  const res = await fetch('https://fakestoreapi.com/products');
   
   if (!res.ok) throw new Error('Failed to fetch products');
   
@@ -22,9 +20,7 @@ export async function getProducts(page: number = 1, limit: number = 6) {
 export async function getProduct(id: string): Promise<Product> {
   if (!id) throw new Error('Product ID is required');
 
-  const res = await fetch(`https://fakestoreapi.com/products/${id}`, {
-    next: { revalidate: 3600 }
-  });
+  const res = await fetch(`https://fakestoreapi.com/products/${id}`);
 
   if (!res.ok) {
     if (res.status === 404) {
