@@ -1,17 +1,26 @@
 import { getProduct } from '@/lib/services/products';
-import { NextResponse } from 'next/server';
 
 export async function GET(
   request: Request,
-  { params }: { params: { id: string } }
+{ params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const data = await getProduct(params.id);
-    return NextResponse.json(data);
+    const id = (await params).id;
+    const data = await getProduct(id);
+
+    return new Response(JSON.stringify(data), {
+      status: 200,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
   } catch (error) {
-    return NextResponse.json(
-      { error: 'Failed to fetch product' },
-      { status: 500 }
-    );
+    console.error(error);
+    return new Response(JSON.stringify({ error: 'Failed to fetch product' }), {
+      status: 500,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
   }
 }

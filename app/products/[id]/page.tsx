@@ -23,7 +23,7 @@ export default async function ProductPage({
 }: {
   params: Promise<{ id: string }>;
 }) {
-  const { id } = await params;
+  const id = (await params).id
   const product = await getProduct(id);
 
   return (

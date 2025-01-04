@@ -6,10 +6,10 @@ import { Suspense } from 'react';
 export default async function ProductsPage({
   searchParams,
 }: {
-  searchParams: { [key: string]: string | string[] | undefined }
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }) {
-	const { page } = await searchParams;
-  const currentPage = Number(page) || 1;
+	const page = await (await searchParams).page;
+	const currentPage = Number(page) || 1;
   
   const { products, totalPages, currentPage: returnedPage } = await getProducts(currentPage);
 
