@@ -34,15 +34,18 @@ export default async function ProductPage({
       </div>
       <Card className="max-w-4xl mx-auto p-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div className="relative aspect-square">
-            <Image
-              src={product.image}
-              alt={product.title}
-              fill
-              className="object-contain"
-              sizes="(max-width: 768px) 100vw, 50vw"
-              priority
-            />
+          <div className="relative bg-gray-100 rounded-lg">
+            <div className="aspect-square w-full">
+              <Image
+                src={product.image}
+                alt={product.title}
+                width={800}
+                height={800}
+                className="object-contain w-full h-full"
+                sizes="(min-width: 768px) 50vw, 100vw"
+                priority
+              />
+            </div>
           </div>
           <div className="space-y-6">
             <div>
@@ -69,7 +72,7 @@ export default async function ProductPage({
               </span>
             </div>
             <p className="text-muted-foreground">{product.description}</p>
-            <div className="space-y-4">
+            <div className="space-y-4 mt-20">
               <AddToCartButton product={product} className="w-full" size="lg" />
             </div>
           </div>
