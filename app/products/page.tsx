@@ -10,7 +10,6 @@ export default async function ProductsPage({
 }) {
   const page = parseInt(searchParams.page || '1');
   
-  try {
     const { products, totalPages, currentPage } = await getProducts(page);
 
     return (
@@ -25,12 +24,4 @@ export default async function ProductsPage({
         </Suspense>
       </div>
     );
-  } catch (error) {
-    return (
-      <div className="flex flex-col items-center justify-center min-h-[50vh] space-y-4">
-        <h2 className="text-2xl font-bold">Something went wrong!</h2>
-        <p className="text-muted-foreground">Failed to load products</p>
-      </div>
-    );
-  }
 }
