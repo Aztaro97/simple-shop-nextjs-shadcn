@@ -21,9 +21,10 @@ export async function generateStaticParams() {
 export default async function ProductPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
-  const product = await getProduct(params.id);
+  const { id } = await params;
+  const product = await getProduct(id);
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -44,6 +45,7 @@ export default async function ProductPage({
                 className="object-contain w-full h-full"
                 sizes="(min-width: 768px) 50vw, 100vw"
                 priority
+				unoptimized
               />
             </div>
           </div>

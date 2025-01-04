@@ -6,22 +6,23 @@ import { Suspense } from 'react';
 export default async function ProductsPage({
   searchParams,
 }: {
-  searchParams: { page: string };
+  searchParams: { [key: string]: string | string[] | undefined }
 }) {
-  const page = parseInt(searchParams.page || '1');
+	const { page } = await searchParams;
+  const currentPage = Number(page) || 1;
   
-    const { products, totalPages, currentPage } = await getProducts(page);
+  const { products, totalPages, currentPage: returnedPage } = await getProducts(currentPage);
 
-    return (
-      <div className="container mx-auto px-4 py-8">
-        <h1 className="text-4xl font-bold mb-8">Our Products</h1>
-        <Suspense fallback={<ProductGridSkeleton />}>
-          <ProductGrid 
-            initialProducts={products}
-            totalPages={totalPages}
-            currentPage={currentPage}
-          />
-        </Suspense>
-      </div>
-    );
+  return (
+    <div className="container mx-auto px-4 py-8">
+      <h1 className="text-4xl font-bold mb-8">Our Products</h1>
+      <Suspense fallback={<ProductGridSkeleton />}>
+        <ProductGrid 
+          initialProducts={products}
+          totalPages={totalPages}
+          currentPage={returnedPage}
+        />
+      </Suspense>
+    </div>
+  );
 }
